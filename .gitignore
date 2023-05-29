@@ -32,6 +32,7 @@ CONFIG.local
 .cproject
 .settings
 .gitreview
+.idea
 mk/cc.mk
 mk/config.mk
 mk/cc.flags.mk
