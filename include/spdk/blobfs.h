@@ -539,6 +539,8 @@ void spdk_file_read_async(struct spdk_file *file, struct spdk_io_channel *channe
 void spdk_file_sync_async(struct spdk_file *file, struct spdk_io_channel *channel,
 			  spdk_file_op_complete cb_fn, void *cb_arg);
 
+struct blobfs *g_blobfs;
+struct spdk_bdev *g_bs_dev;
 
 /**
  * Open function which implement POSIX API interface. If
@@ -550,6 +552,14 @@ void spdk_file_sync_async(struct spdk_file *file, struct spdk_io_channel *channe
  * \param mode ...
  */
 int open(const char *pathname, int flags, mode_t mode);
+
+/**
+ * Make directory by path, implement POSIX API interface.
+ *
+ * \param path Path to file.
+ * \param mode ...
+ */
+int mkdir(const char *path, mode_t mode);
 
 #define BLOBFS_NAME_MAX 256
 

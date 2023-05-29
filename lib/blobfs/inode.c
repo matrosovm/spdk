@@ -15,6 +15,7 @@ struct spdk_inode {
     time_t ctime;
     off_t size;
     int blocks_count;
+    uint64_t nlink;
     uint64_t data[32];
 };
 
