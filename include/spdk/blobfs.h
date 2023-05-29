@@ -539,6 +539,137 @@ void spdk_file_read_async(struct spdk_file *file, struct spdk_io_channel *channe
 void spdk_file_sync_async(struct spdk_file *file, struct spdk_io_channel *channel,
 			  spdk_file_op_complete cb_fn, void *cb_arg);
 
+struct blobfs *g_blobfs;
+struct spdk_bdev *g_bs_dev;
+
+/**
+ * Open function which implement POSIX API interface. If
+ * the specified file does not exist, it may optionally (if O_CREAT
+ * is specified in flags) be created by open().
+ * 
+ * \param pathname Path to file.
+ * \param flags Open file with flags (O_CREATE)
+ * \param mode ...
+ */
+int open(const char *pathname, int flags, mode_t mode);
+
+/**
+ * Make directory by path, implement POSIX API interface.
+ *
+ * \param path Path to file.
+ * \param mode Mode.
+ */
+int mkdir(const char *path, mode_t mode);
+
+#define BLOBFS_NAME_MAX 256
+
+struct spdk_inode;
+struct spdk_dir_entry;
+struct blobfs_file;
+enum spdk_inode_type;
+
+/**
+ * Open directory by name.
+ *
+ * \param name Name of directory.
+ */
+DIR *opendir(const char *name);
+
+/**
+ * Delete directory by path, implement POSIX API interface.
+ *
+ * \param path Path to deleting directory.
+ */
+int rmdir(const char *path);
+
+/**
+ * Change file/directory mode by path, implement POSIX API interface.
+ *
+ * \param path Path to file.
+ * \param mode Mode.
+ */
+int chmod(const char *path, mode_t mode);
+
+/**
+ *  Change the owner and group of a file, implement POSIX API interface.
+ *
+ * \param uid Uid.
+ * \param gid Gid.
+ */
+int chown(const char *path, uid_t uid, gid_t gid);
+
+/**
+ *  Close by file descriptor, implement POSIX API interface.
+ *
+ * \param fd File descriptor.
+ */
+int close(int fd);
+
+/**
+ *  Read by file descriptor in buf, implement POSIX API interface.
+ *
+ * \param fd File descriptor.
+ * \param buf Buffer.
+ * \param count Count of bytes.
+ *
+ */
+ssize_t read(int fd, void *buf, size_t count);
+
+/**
+ *  Read directory, implement POSIX API interface.
+ *
+ * \param dirp Dirp.
+ *
+ */
+struct dirent *readdir(DIR *dirp);
+
+/**
+ *  Remove directory by path, implement POSIX API interface.
+ *
+ * \param path Path to directory.
+ *
+ */
+int rmdir(const char *path);
+
+/**
+ *  Changes the access and modification times
+ *  of the inode specified by filename to the actime and modtime
+ *  fields of times respectively.
+ *
+ * \param path Path to directory.
+ * \param time Time.
+ *
+ */
+int utime(const char *path, const struct utimbuf *times);
+
+/**
+ *  Write by file descriptor to buffer, count bytes, implement POSIX API interface.
+ *
+ * \param fd File descriptor.
+ * \param buf Buffer.
+ * \param count Count.
+ *
+ */
+ssize_t write(int fd, const void *buf, size_t count);
+
+/**
+ *  The regular file
+ *  named by path or referenced by fd to be truncated to a size of
+ *  precisely length bytes.
+ *
+ * \param path Path to directory.
+ * \param length Lenght.
+ */
+int truncate(const char *path, off_t length);
+
+/**
+ * Return information about a file, in the buffer pointed to by statbuf.
+ *
+ * \param path Path to directory.
+ * \param st Stat.
+ */
+int stat(const char *path, struct stat *st);
+
 #ifdef __cplusplus
 }
 #endif

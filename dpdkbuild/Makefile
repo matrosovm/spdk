@@ -11,6 +11,7 @@ include $(SPDK_ROOT_DIR)/mk/spdk.common.mk
 
 DPDK_OPTS = -Denable_docs=false
 DPDK_OPTS += -Dtests=false
+#DPDK_OPTS += -Dplatform=generic
 DPDK_CFLAGS =
 
 DPDK_KMODS = false
