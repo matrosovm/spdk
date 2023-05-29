@@ -6,6 +6,16 @@
 #include <sys/types.h>
 #include "blobfs.h"
 
+enum spdk_inode_type {
+    SPDK_INODE_FILE,
+    SPDK_INODE_DIR,
+    SPDK_INODE_SYMLINK,
+    SPDK_INODE_DEVICE,
+    SPDK_INODE_SOCKET,
+    SPDK_INODE_FIFO,
+};
+
+
 struct spdk_inode {
     mode_t mode;
     uid_t uid;
@@ -17,6 +27,7 @@ struct spdk_inode {
     int blocks_count;
     uint64_t nlink;
     uint64_t data[32];
+    enum spdk_inode_type type;
 };
 
 struct cache_entry {

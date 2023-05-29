@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include "blobfs.h"
 
-int blobfs_mkdir(const char *path, mode_t mode)
+int mkdir(const char *path, mode_t mode)
 {
     struct blobfs *blobfs = g_blobfs;
     struct spdk_inode *parent_inode, *inode;
@@ -24,9 +24,9 @@ int blobfs_mkdir(const char *path, mode_t mode)
         return -EEXIST;
     }
 
-    inode = blobfs_alloc_inode(blobfs);
+    inode = __spdk_alloc_inode(blobfs);
     if (!inode) {
-        blobfs_put_inode(parent_inode);
+        __spdk_put_inode(parent_inode);
         free(name);
         return -ENOSPC;
     }
