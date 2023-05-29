@@ -539,6 +539,24 @@ void spdk_file_read_async(struct spdk_file *file, struct spdk_io_channel *channe
 void spdk_file_sync_async(struct spdk_file *file, struct spdk_io_channel *channel,
 			  spdk_file_op_complete cb_fn, void *cb_arg);
 
+
+/**
+ * Open function which implement POSIX API interface. If
+ * the specified file does not exist, it may optionally (if O_CREAT
+ * is specified in flags) be created by open().
+ * 
+ * \param pathname Path to file.
+ * \param flags Open file with flags (O_CREATE)
+ * \param mode ...
+ */
+int open(const char *pathname, int flags, mode_t mode);
+
+#define BLOBFS_NAME_MAX 256
+
+struct spdk_inode;
+struct spdk_dir_entry;
+struct blobfs_file;
+
 #ifdef __cplusplus
 }
 #endif
